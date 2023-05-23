@@ -4,5 +4,12 @@ BP*
 # all temporary files
 temp*
 
+# all log files from docker built
+log*
+
+# temporary files for new vapoursynth plugins
+docker/build/vapoursynth-plugins-added*
+docker/build/vapoursynth-plugins/build.sh_tweaked*
+
 # all files that end with
 *~

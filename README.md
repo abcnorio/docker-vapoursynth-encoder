@@ -1,4 +1,6 @@
-This is a fork from [WeebDataHoarder](https://git.gammaspectra.live/WeebDataHoarder/encoder). This repo upgrades the original Dockerfile to R55 (vapoursynth) and add some more vapoursynth plugins.
+# Docker env (vapoursynth, plugins, encoders)
+
+This is a fork from [WeebDataHoarder](https://git.gammaspectra.live/WeebDataHoarder/encoder). This repo upgrades the original Dockerfile to R55 (vapoursynth) and adds some more vapoursynth plugins.
 
 A Dockerfile featuring several video encoding / processing / filtering utilities.
 
@@ -65,3 +67,7 @@ docker run -it --rm -v /path/to/mount/on/container:/mnt encoder
 | [TTempSmooth]() | VapourSynth Plugin | |
 | [bestaudiosource]() | VapourSynth Plugin | |
 | [assrender]() | VapourSynth Plugin | |
+
+The two patch files are the changes to WeebDataHoarder's original repo:
+- `Dockerfile.patch`
+- `vps-plugins_build-sh.patch`
