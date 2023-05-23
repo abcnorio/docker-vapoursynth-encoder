@@ -1,13 +1,60 @@
 # Docker env (vapoursynth, plugins, encoders)
 
-This is a fork from [WeebDataHoarder](https://git.gammaspectra.live/WeebDataHoarder/encoder). This repo upgrades the original Dockerfile to R55 (vapoursynth) and adds some more vapoursynth plugins.
-
-A Dockerfile featuring several video encoding / processing / filtering utilities.
+This is a fork of [WeebDataHoarder](https://git.gammaspectra.live/WeebDataHoarder/encoder). This repo upgrades the original Dockerfile to R55 (vapoursynth) and adds some more vapoursynth plugins.
+It is useful to create a docker container to run vapoursynth headless on a server remotely (batch mode, ...).
+Besides vapoursynth, the Dockerfile features several video encoding / processing / filtering utilities.
 
 ## Build and run
 ```bash
 docker build -t encoder .
 docker run -it --rm -v /path/to/mount/on/container:/mnt encoder
+```
+
+## Usage
+```bash
+# define $output and $output-av-mux files initially
+
+# vspipe/ vapoursynth cannot output a + v at the same time
+# encode separately and then mux
+
+# video with output mp4
+vspipe vapoursynth-config.vpy | vspipe -o 0 -c y4m "vapoursynth-config.vpy" - | ffmpeg -nostdin -i - -c:v libx264 "$output.mp4"
+
+# audio with output aac
+vspipe $vapoursynth-config.vpy
+vspipe -o 1 -c wav "vapoursynth-config.vpy" - | ffmpeg -nostdin -i - -c:a aac "$output.aac"
+
+# av mux
+ffmpeg -nostdin -i "$output.mp4" -i "$output.aac" -c:v copy -c:a copy -disposition:a:1 default "$output-av-mux.mp4"
+```
+
+# Example vapoursynth config file
+vapoursynth-config.vpy (example: wav audio + vob video + subtitles with ass)
+```
+import vapoursynth as vs
+import sys
+
+# path to folder with havsfunc.py
+sys.path.append('/path/to/folder-with-havsfunc.py')
+import havsfunc
+
+core = vs.core
+
+haf = havsfunc
+
+# input wav file
+audio = core.bas.Source('inputfile.wav', track=-1)
+
+# input video file - here d2v file for vob files
+video = core.d2v.Source(input=r'inputfile.d2v')
+# do deinterlacing with QTGMC
+video = haf.QTGMC(video, Preset='Slow', TFF=True)
+# add subtitles in ass format
+video = core.assrender.TextSub(clip=video, file=r'subtitlefile.ass')
+
+# set output
+audio.set_output(index=1)
+video.set_output(index=0) 
 ```
 
 ## Included tools
@@ -65,9 +112,9 @@ docker run -it --rm -v /path/to/mount/on/container:/mnt encoder
 | [sangnom]() | VapourSynth Plugin | |
 | [sangnom modded]() | VapourSynth Plugin | |
 | [TTempSmooth]() | VapourSynth Plugin | |
-| [bestaudiosource]() | VapourSynth Plugin | |
-| [assrender]() | VapourSynth Plugin | |
+| [bestaudiosource]() | VapourSynth Plugin | allow audio usage within vapoursynth |
+| [assrender]() | VapourSynth Plugin | insert subtitles of ssa/ass type |
 
-The two patch files are the changes to WeebDataHoarder's original repo:
+The two patch files contain the changes compared to WeebDataHoarder's original repo:
 - `Dockerfile.patch`
 - `vps-plugins_build-sh.patch`
