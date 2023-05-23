@@ -1,0 +1,19 @@
+--- ../encoder_original/Dockerfile	2023-05-22 07:07:27.708924596 +0200
++++ ./Dockerfile	2023-05-22 13:36:37.161771110 +0200
+@@ -160,7 +160,7 @@
+ 
+ ARG MAGICK_TAG=7.1.0-39
+ ARG ZIMG_TAG=release-3.0.4
+-ARG VS_TAG=R54
++ARG VS_TAG=R55
+ 
+ COPY docker/build/magick/build.sh /build-magick.sh
+ COPY docker/build/zimg/build.sh /build-zimg.sh
+@@ -173,6 +173,7 @@
+ 
+ ENV PYTHONPATH "/usr/lib/python${PYTHON_VERSION}/site-packages:/usr/lib/vapoursynth:$PYTHONPATH"
+ 
++# additional plugins for R55 (havsfunc, BAS, assrender, ...)
+ COPY docker/build/vapoursynth-plugins/build.sh /build-vapoursynth-plugins.sh
+ 
+ RUN  /build-vapoursynth-plugins.sh

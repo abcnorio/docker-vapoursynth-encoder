@@ -1,0 +1,8 @@
+# all backup files
+BP*
+
+# all temporary files
+temp*
+
+# all files that end with
+*~

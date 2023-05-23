@@ -1,0 +1,149 @@
+--- ../encoder_original/docker/build/vapoursynth-plugins/build.sh	2023-05-22 07:07:27.872979328 +0200
++++ ./docker/build/vapoursynth-plugins/build.sh	2023-05-22 13:21:35.858768257 +0200
+@@ -105,6 +105,146 @@
+ make -j$(nproc)
+ make install
+ 
++
++# AdddGrain
++git-shallow-clone "master" https://github.com/HomeOfVapourSynthEvolution/VapourSynth-AddGrain.git /src/VapourSynth-AddGrain
++pushd /src/VapourSynth-AddGrain
++meson build
++ninja -C build
++cp build/libaddgrain.so /usr/lib/vapoursynth/
++
++# Bwdif
++git-shallow-clone "master" https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Bwdif.git /src/VapourSynth-Bwdif
++pushd /src/VapourSynth-Bwdif
++meson build
++ninja -C build
++cp build/libbwdif.so  /usr/lib/vapoursynth/
++
++# CAS
++git-shallow-clone "master" https://github.com/HomeOfVapourSynthEvolution/VapourSynth-CAS.git /src/VapourSynth-CAS
++pushd /src/VapourSynth-CAS
++meson build
++ninja -C build
++cp build/libcas.so /usr/lib/vapoursynth/
++
++# CTMF
++git-shallow-clone "master" https://github.com/HomeOfVapourSynthEvolution/VapourSynth-CTMF.git /src/VapourSynth-CTMF
++pushd /src/VapourSynth-CTMF
++meson build
++ninja -C build
++cp build/libctmf.so /usr/lib/vapoursynth/
++
++# DCTFilter
++git-shallow-clone "master" https://github.com/HomeOfVapourSynthEvolution/VapourSynth-DCTFilter.git /src/VapourSynth-DCTFilter
++pushd /src/VapourSynth-DCTFilter
++meson build
++ninja -C build
++cp build/libdctfilter.so /usr/lib/vapoursynth/
++
++# Deblock
++git-shallow-clone "master" https://github.com/HomeOfVapourSynthEvolution/VapourSynth-Deblock.git /src/VapourSynth-Deblock
++pushd /src/VapourSynth-Deblock
++meson build
++ninja -C build
++cp build/libdeblock.so /usr/lib/vapoursynth/
++
++# EEDI2
++git-shallow-clone "master" https://github.com/HomeOfVapourSynthEvolution/VapourSynth-EEDI2.git /src/VapourSynth-EEDI2
++pushd /src/VapourSynth-EEDI2
++meson build
++ninja -C build
++cp build/libeedi2.so /usr/lib/vapoursynth/
++
++# EEDI3
++git-shallow-clone "master" https://github.com/HomeOfVapourSynthEvolution/VapourSynth-EEDI3.git /src/VapourSynth-EEDI3
++pushd /src/VapourSynth-EEDI3
++meson build -Dopencl=false
++ninja -C build
++cp build/libeedi3m.so /usr/lib/vapoursynth/
++
++# fluxsmooth
++git-shallow-clone "master" https://github.com/dubhater/vapoursynth-fluxsmooth.git /src/vapoursynth-fluxsmooth
++pushd /src/vapoursynth-fluxsmooth
++./autogen.sh
++./configure
++make
++cp .libs/libfluxsmooth.so /usr/lib/vapoursynth/
++
++# hqdn3d
++git-shallow-clone "master" https://github.com/Hinterwaeldlers/vapoursynth-hqdn3d.git /src/vapoursynth-hqdn3d
++pushd /src/vapoursynth-hqdn3d
++./autogen.sh
++./configure
++make
++cp .libs/libhqdn3d.so /usr/lib/vapoursynth/
++
++# KNLMeansCL
++apt-get update && apt-get install -y ocl-icd-opencl-dev libopencl-clang-dev
++git-shallow-clone "master" https://github.com/Khanattila/KNLMeansCL.git /src/KNLMeansCL
++pushd /src/KNLMeansCL
++meson build
++ninja -C build
++cp build/libknlmeanscl.so /usr/lib/vapoursynth/
++
++# miscfilters (obsolete)
++git-shallow-clone "master" https://github.com/vapoursynth/vs-miscfilters-obsolete.git /src/vs-miscfilters-obsolete
++pushd /src/vs-miscfilters-obsolete
++meson build
++ninja -C build
++cp build/libmiscfilters.so /usr/lib/vapoursynth/
++
++# NNEDI3CL
++git-shallow-clone "master" https://github.com/HomeOfVapourSynthEvolution/VapourSynth-NNEDI3CL.git /src/VapourSynth-NNEDI3CL
++pushd /src/VapourSynth-NNEDI3CL
++meson build
++ninja -C build
++cp build/libnnedi3cl.so /usr/lib/vapoursynth/
++
++# removegrain
++git-shallow-clone "master" https://github.com/vapoursynth/vs-removegrain.git /src/vs-removegrain
++pushd /src/vs-removegrain
++meson build
++ninja -C build
++cp build/libremovegrain.so /usr/lib/vapoursynth/
++
++# sangnom
++# fork, original not on the net anymore
++git-shallow-clone "master" https://github.com/dubhater/vapoursynth-sangnom.git /src/vapoursynth-sangnom
++pushd /src/vapoursynth-sangnom
++meson build
++ninja -C build
++cp build/libsangnom.so /usr/lib/vapoursynth/
++
++# sangnom modded
++git-shallow-clone "master" https://github.com/HomeOfVapourSynthEvolution/VapourSynth-SangNomMod.git /src/VapourSynth-SangNomMod
++pushd /src/VapourSynth-SangNomMod
++./configure
++make
++cp ./libsangnommod.so /usr/lib/vapoursynth/
++
++# TTempSmooth
++git-shallow-clone "master" https://github.com/HomeOfVapourSynthEvolution/VapourSynth-TTempSmooth.git /src/VapourSynth-TTempSmooth
++pushd /src/VapourSynth-TTempSmooth
++meson build
++ninja -C build
++cp build/libttempsmooth.so /usr/lib/vapoursynth/
++
++# bestaudiosource
++git-shallow-clone "master" https://github.com/vapoursynth/bestaudiosource.git /src/bestaudiosource
++pushd /src/bestaudiosource
++#curl https://raw.githubusercontent.com/vapoursynth/vapoursynth/master/include/VapourSynth4.h -O
++meson build
++ninja -C build
++cp build/libbestaudiosource.so /usr/lib/vapoursynth/
++
++# assrender
++git-shallow-clone "master" https://github.com/AmusementClub/assrender.git /src/assrender
++pushd /src/assrender
++cmake -B build -S .
++cmake --build build --clean-first
++cp build/src/libassrender.so /usr/lib/vapoursynth/
++
++
+ curl https://raw.githubusercontent.com/HomeOfVapourSynthEvolution/havsfunc/3b6a80ce502e6775c70df6bb2d19124de149073f/havsfunc.py > /usr/lib/vapoursynth/havsfunc.py
+ curl https://raw.githubusercontent.com/HomeOfVapourSynthEvolution/mvsfunc/90e185220901402b974d7364345e0f25e71ab8fe/mvsfunc.py   > /usr/lib/vapoursynth/mvsfunc.py
+ curl https://raw.githubusercontent.com/Irrational-Encoding-Wizardry/fvsfunc/29ced90a3f620844dea0efa8666542298f68f421/fvsfunc.py > /usr/lib/vapoursynth/fvsfunc.py
