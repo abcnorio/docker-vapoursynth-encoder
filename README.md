@@ -1,6 +1,6 @@
 # Docker env (vapoursynth, plugins, encoders)
 
-This is a fork of [WeebDataHoarder](https://git.gammaspectra.live/WeebDataHoarder/encoder). This repo upgrades the original Dockerfile to R55 (vapoursynth) and adds some more vapoursynth plugins.
+This is a fork of [WeebDataHoarder](https://git.gammaspectra.live/WeebDataHoarder/encoder). It extends the original Dockerfile to R55 (vapoursynth) and adds some more vapoursynth plugins.
 It is useful to create a docker container to run vapoursynth headless on a server remotely (batch mode, ...).
 Besides vapoursynth, the Dockerfile features several video encoding / processing / filtering utilities.
 
@@ -13,6 +13,8 @@ docker run -it --rm -v /path/to/mount/on/container:/mnt encoder
 ## Usage
 ```bash
 # define $output and $output-av-mux files initially
+output=/path/and/filename/of-temporary-audio-video-file-without-file-ending
+output-av-mux="$output"-av-mux
 
 # vspipe/ vapoursynth cannot output a + v at the same time
 # encode separately and then mux
@@ -112,7 +114,7 @@ video.set_output(index=0)
 | [sangnom]() | VapourSynth Plugin | |
 | [sangnom modded]() | VapourSynth Plugin | |
 | [TTempSmooth]() | VapourSynth Plugin | |
-| [bestaudiosource]() | VapourSynth Plugin | allow audio usage within vapoursynth |
+| [bestaudiosource]() | VapourSynth Plugin | allow audio usage within VapourSynth |
 | [assrender]() | VapourSynth Plugin | insert subtitles of ssa/ass type |
 
 The two patch files contain the changes compared to WeebDataHoarder's original repo:
