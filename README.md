@@ -32,7 +32,7 @@ ffmpeg -nostdin -i "$output.mp4" -i "$output.aac" -c:v copy -c:a copy -dispositi
 ```
 
 # Example VapourSynth config file
-vapoursynth-config.vpy (example: wav audio + vob video + subtitles with ass)
+vapoursynth-config.vpy (example: wav audio + vob video + deinterlacing with QTGMC + subtitles with assrender)
 ```
 import vapoursynth as vs
 import sys
